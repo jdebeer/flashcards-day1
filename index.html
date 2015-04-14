@@ -1,32 +1,30 @@
 <!DOCTYPE html>
-<html ng-app>
-    <head>
-        <title>Flash Cards</title>
-        <!-- We've provided some styles for you, aren't we nice? -->
-        <link rel="stylesheet" type="text/css" href="reset.css" />
-        <link rel="stylesheet" type="text/css" href="style.css" />
-        <script src="angular.js"></script>
-        <script src="app.js"></script>
-    </head>
-    <body>
-      <div ng-app="Flashcards">
-        {{ 2 + 2 }}
-
-        <div class="flash-card">
-            <h1>Is this a flash card?</h1>
-            <ul class="flash-card-answers">
-                <li class="flash-card-answer">
-                    I mean, yeah.
-                </li>
-                <li class="flash-card-answer">
-                    No, it's not.
-                </li>
-                <li class="flash-card-answer">
-                    What's a flash card?
-                </li>
-            </ul>
-        </div>
-        
+<html>
+  <head>
+      <title>Flash Cards</title>
+      <!-- We've provided some styles for you, aren't we nice? -->
+      <link rel="stylesheet" type="text/css" href="reset.css" />
+      <link rel="stylesheet" type="text/css" href="style.css" />
+      <script src="angular.js"></script>
+      <script src="app.js"></script>
+  </head>
+  <body>
+    <div ng-app="FlashCards" ng-controller="MainController">
+      <div class="flash-card" ng-controller="FlashCardController" ng-repeat="flashcard in flashCards | orderBy:'question':reverse">
+        <h1> {{ flashcard.question | uppercase}} </h1>
+        <ul class="flash-card-answers">
+          <li  class="flash-card-answer" ng-repeat="answer in flashcard.answers" ng-click="answerQuestion(flashcard, answer)" >
+              {{ answer.text }}
+          </li>
+        </ul>
+        <h2 class="answer-feedback" ng-show="flashcard.answered" ng-class="{correct: flashcard.answeredCorrectly === true, incorrect: flashcard.answeredCorrectly === false}">
+          <span ng-show="flashcard.answeredCorrectly" >you got it right!</span>
+          <span ng-show="!flashcard.answeredCorrectly" >nope, you got it wrong.</span>
+        </h2>
+        <h2 class="answer-feedback" ng-show="flashcard.answered">
+          <span >Question Answered</span>
+        </h2>
       </div>
-    </body>
+    </div>
+  </body>
 </html>
